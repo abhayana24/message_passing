@@ -51,10 +51,12 @@ fn main() {
 
     let mut handles = vec![];
 
-    //create vector of 1000 tasks in loop to be distibuted among worker threads
+    //create vector of tasks to be distibuted among worker threads
     let tasks: Vec<Task> = (0..1000).map(|i| create_task(i, format!("task {}", i))).collect();
 
-    //distributing vector of tasks defined above among worker threads, we should ensure main thread waits for all worker threads to finish their work before it exits and display a cmplettion message
+    //distributing vector of tasks defined above among worker threads, 
+    // we should ensure main thread waits for all worker threads to finish 
+    // their work before it exits and display a completion message
     for id in 0..num_workers {
         let rx = Arc::clone(&rx);
         let handle = thread::spawn(move || {
